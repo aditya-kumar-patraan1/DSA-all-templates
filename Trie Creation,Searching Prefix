@@ -1,0 +1,84 @@
+class Trie{
+    public:
+    Trie* children[26];
+    int is_end_of_word;
+
+    Trie(){
+        is_end_of_word = 0;     /*this can be true or false also insted of int*/
+        for(int i=0;i<26;i++){
+            children[i] = NULL;
+        }
+    }
+};
+
+
+/*within Solution and under public:*/
+    Trie* root;
+    Solution(){
+        root = new Trie();
+    }
+    void insert(string word) {
+        TrieNode* crawler = root;
+
+        for (int i = 0; i < word.length(); ++i) {
+            char ch = word[i];
+            int idx = ch - 'a';
+            if (crawler->children[idx] == NULL) {
+                crawler->children[idx] = getNode();
+            }
+            crawler = crawler->children[idx];
+        }
+        crawler->isEndOfWord = true;
+    }
+
+    bool search(string word) {
+        TrieNode* crawler = root;
+
+        for (int i = 0; i < word.length(); ++i) {
+            char ch = word[i];
+            int idx = ch - 'a';
+
+            if (crawler->children[idx] == NULL) {
+                return false;
+            }
+            crawler = crawler->children[idx];
+        }
+
+        return crawler->isEndOfWord;
+    }
+
+    bool startsWith(string prefix) {
+        TrieNode* crawler = root;
+
+        for (int i = 0; i < prefix.length(); ++i) {
+            char ch = prefix[i];
+            int idx = ch - 'a';
+
+            if (crawler->children[idx] == NULL) {
+                return false;
+            }
+            crawler = crawler->children[idx];
+        }
+        return true;
+    }
+
+
+/*DFS in the trie*/
+
+void DFS(vector<string> &res,string &temp,Trie* crawler){
+
+        if(res.size() == 3){              /*this condition can vary from question to question */
+            return;
+        }
+        if(crawler->end_of_word == true){
+            res.push_back(temp);
+        }
+
+        for(int i=0;i<26;i++){
+            if(crawler->children.find(i) != crawler->children.end()){
+                temp.push_back(i+'a');
+                DFS(res,temp,crawler->children[i]);
+                temp.pop_back();
+            }
+        }
+    }
