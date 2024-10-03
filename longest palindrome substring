@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+string longestPalindrome(const string &s) {
+    string st = "@#";
+    for (char c : s) {
+        st += c;
+        st += '#';
+    }
+    st += "&";
+
+    int n = st.size();
+    vector<int> lps(n, 0);
+    int c = 0, r = 0;
+
+    for (int i = 1; i < n - 1; i++) {
+        int mirror = c - (i - c);
+        if (i < r) {
+            lps[i] = min(lps[mirror], r - i);
+        }
+        while (st[i + lps[i] + 1] == st[i - lps[i] - 1]) {
+            lps[i]++;
+        }
+        if (i + lps[i] > r) {
+            r = i + lps[i];
+            c = i;
+        }
+    }
+
+    int maxLen = 0, centerIndex = 0;
+    for (int i = 1; i < n - 1; i++) {
+        if (lps[i] > maxLen) {
+            maxLen = lps[i];
+            centerIndex = i;
+        }
+    }
+
+    int start = (centerIndex - maxLen - 1) / 2;
+    return s.substr(start, maxLen);
+}
+
+int main() {
+    string s = "babad";
+    string result = longestPalindrome(s);
+    cout << "Longest Palindromic Substring: " << result << endl;
+    return 0;
+}
