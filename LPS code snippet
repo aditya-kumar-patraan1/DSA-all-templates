@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+vector<int> computeLPS(const string &pattern) {
+    int m = pattern.size();
+    vector<int> lps(m, 0);
+    int length = 0;
+    int i = 1;
+
+    while (i < m) {
+        if (pattern[i] == pattern[length]) {
+            length++;
+            lps[i] = length;
+            i++;
+        } else {
+            if (length != 0) {
+                length = lps[length - 1];
+            } else {
+                lps[i] = 0;
+                i++;
+            }
+        }
+    }
+    
+    return lps;
+}
+
+int main() {
+    string s = "abababca";
+    vector<int> lps = computeLPS(s);
+
+    cout << "LPS Array: ";
+    for (int value : lps) {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    cout << "Length of the longest prefix which is also a suffix: " << lps.back() << endl;
+
+    return 0;
+}
