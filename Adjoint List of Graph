@@ -1,0 +1,27 @@
+//adjoint list for directed graph
+unordered_map<int,vector<int>> adj;
+
+
+        for(auto t : edges){
+            int u = t[0];
+            int v = t[1];
+
+            adj[u].push_back(v);
+        }
+
+
+
+
+
+//adjoint list for undirected graph
+
+unordered_map<int,vector<int>> adj;
+
+
+        for(auto t : edges){
+            int u = t[0];
+            int v = t[1];
+
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
