@@ -1,0 +1,13 @@
+vector<string> intoWords(string s){
+        stringstream ss(s);
+
+        string temp;
+
+        vector<string> words;
+
+        while(getline(ss,temp,' ')){
+            if(!temp.empty()) words.push_back(temp);
+        }
+
+        return words;
+    }
