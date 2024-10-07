@@ -1,0 +1,74 @@
+class Solution {
+public:
+
+    int maxTurbulenceSize(vector<int>& arr) {
+        int n = arr.size();
+
+        if(n == 1){
+            return 1;
+        }
+
+        vector<bool> track1(n);
+        vector<bool> track2(n);
+
+        for(int i=0;i<n-1;i++){
+            if(i%2==0){
+                track1[i] = arr[i] < arr[i+1];
+            }
+            else{
+                track1[i] = arr[i] > arr[i+1];
+            }
+        }
+
+        for(int i=0;i<n-1;i++){
+            if(i%2==0){
+                track2[i] = arr[i] > arr[i+1];
+            }
+            else{
+                track2[i] = arr[i] < arr[i+1];
+            }
+        }
+
+        int ans1 = 0;
+        int max1 = 1;
+
+        for(int i=0;i<n;i++){
+            if(track1[i] == 1){
+                ans1++;
+            }
+            else{
+                ans1 = 0;
+            }
+            if(ans1 == 0) continue;
+            max1 = max(ans1 + 1,max1);
+        }
+
+        int ans2 = 0;
+        int max2 = 1;
+
+        for(int i=0;i<n;i++){
+            if(track2[i] == 1){
+                ans2++;
+            }
+            else{
+                ans2 = 0;
+            }
+            if(ans2 == 0) continue;
+            max2 = max(ans2 + 1,max2);
+        }
+
+        return max(max1,max2);
+
+        
+
+        return 0;
+    }
+};
+
+auto init = []()
+{ 
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
