@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        // ios_base::sync_with_stdio(false);
+        // cin.tie(NULL);
+        stack<int> stk;
+        int n = s.length();
+        for(int i=0;i<n;i++){
+            if(s[i]=='('){
+                stk.push(i);
+            }
+            else if(s[i]==')'){
+                if(!stk.empty()){
+                    stk.pop();
+                }
+                else{
+                    s[i]='*';
+                }
+            }
+        }
+        while(!stk.empty()){
+            s[stk.top()]='*';
+            stk.pop();
+        }
+        string res="";
+        for(int j=0;j<n;j++){
+            if(s[j]!='*'){
+                res+=s[j];
+            }
+        }
+        return res;
+    }
+};
