@@ -1,0 +1,26 @@
+Node* constructLinkedMatrix(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        
+        vector<Node*> track(n);
+        
+        Node* head = new Node(matrix[0][0]);
+        track[0] = head;
+        
+        for(int i=1;i<n;i++){
+            track[i-1] -> right = new Node(matrix[0][i]);
+            track[i] = track[i-1] -> right;
+        }
+        
+        for(int i=1;i<n;i++){
+            
+            for(int j=0;j<n;j++){
+                track[j]->down = new Node(matrix[i][j]);
+                track[j] = track[j] -> down;
+            }
+            for(int k=1;k<n;k++){
+                track[k-1] -> right = new Node(matrix[i][k]);
+                track[k] = track[k-1] -> right;
+            }
+        }
+        
+        return head;
