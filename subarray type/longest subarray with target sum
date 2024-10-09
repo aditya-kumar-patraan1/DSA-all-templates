@@ -1,0 +1,16 @@
+int i = 0, j = 0;
+        long long sum = 0;
+        int maxi = 0;
+
+        while(j < n){
+            sum += a[j];
+
+            while(i < n && sum > rem){
+                sum -= a[i];
+                i++;
+            }
+
+            if(rem == sum) maxi = max(maxi,j - i + 1);
+
+            j++;
+        }
