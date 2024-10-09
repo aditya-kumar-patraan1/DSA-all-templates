@@ -1,0 +1,55 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int m = s.length();
+        int n = t.length();
+
+        if(n > m){
+            return "";
+        }
+        
+        int i = 0;
+        int j = 0;
+
+        int  needed = n;
+
+        unordered_map<char,int> freq;
+
+        for(int i=0;i<n;i++){
+            char c = t[i];
+            freq[c]++;
+        }
+
+
+        int mini = INT_MAX;
+
+        int start = -1;
+
+        while(j < m){
+            char ch = s[j];
+            
+            if(freq[ch] > 0){
+                needed--;
+            }
+            freq[ch]--;
+
+
+            while(needed == 0){
+                if(mini > j-i+1){
+                    start = i;
+                    mini = j-i+1;
+                }
+                ch = s[i];
+                freq[ch]++; 
+                if(freq[ch] > 0){
+                    needed++;
+                }
+                i++;
+            }
+            j++;
+        }
+
+
+        return start == -1 ? "" : s.substr(start,mini);
+    }
+};
