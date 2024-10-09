@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int n;
+    int maxFrequency(vector<int>& a, int k) {
+        sort(begin(a),end(a));
+        this->n = a.size();
+        int ans = 1;
+
+        long long prefSum = a[0];
+        int i = 0 , j = 1;
+
+        while(j < n){
+            prefSum += a[j];
+            int currEle = a[j];
+            long long totalCost = currEle * 1LL * (j - i + 1);
+            long long needed = totalCost - prefSum;
+
+            while(needed > k){
+                prefSum -= a[i];
+                i++;
+                totalCost = currEle * 1LL * (j - i + 1);
+                needed = totalCost - prefSum;
+            }
+            // cout<<j-i+1<<endl;
+
+            ans = max(ans , (j - i + 1));
+
+            j++;
+        }
+
+        return ans;
+    }
+};
