@@ -53,3 +53,53 @@ public:
         return start == -1 ? "" : s.substr(start,mini);
     }
 };
+
+Similar concept based Problem link : https://leetcode.com/problems/count-substrings-that-can-be-rearranged-to-contain-a-string-i/
+
+
+class Solution {
+public:
+    long long validSubstringCount(string word1, string word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int j = 0,i = 0;
+        
+        int needed = n;
+
+        unordered_map<int,int> freq;
+        vector<int> ending;
+
+        for(int i=0;i<n;i++){
+            freq[word2[i]]++;
+        }
+
+        while(j<m){
+            char ch = word1[j];
+
+            if(freq[ch] > 0){
+                needed--;
+            }
+
+            freq[ch]--;
+
+            while(needed == 0){
+                ending.push_back(j);
+                ch = word1[i];
+                freq[ch]++;
+                if(freq[ch] > 0){
+                    needed++;
+                }
+                i++;
+            }
+            j++;
+        }
+
+        long long ans = 0;
+
+        for(int i=0;i<ending.size();i++){
+            ans += (m - ending[i]);
+        }
+
+        return ans;
+    }
+};
