@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> resultsArray(vector<int>& nums, int k) {
+        int n = nums.size();
+        
+        vector<int> res;
+
+        vector<int> Ibreak(n);
+
+        for(int i=1;i<n;i++){
+            if(nums[i] != nums[i-1] + 1){
+                Ibreak[i] = 1;
+            }
+        }
+
+        for(int i=1;i<n;i++){
+            Ibreak[i] = Ibreak[i-1] + Ibreak[i];
+        }
+
+        for(int i=k-1;i<n;i++){
+            if(Ibreak[i] - Ibreak[i-k+1] != 0) res.push_back(-1);
+            else res.push_back(nums[i]);
+        }
+
+        return res;
+        
+    }
+};
