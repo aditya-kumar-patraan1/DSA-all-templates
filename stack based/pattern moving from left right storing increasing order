@@ -1,0 +1,26 @@
+// a -----------------------------------------------------------------------------b such that a<=b    j-i is the answer
+
+class Solution {
+public:
+    int maxWidthRamp(vector<int>& nums) {
+        int n = nums.size();
+        stack<int> Stk;
+
+        for (int i = 0; i < n; i++) {
+            if (Stk.empty() || nums[Stk.top()] >= nums[i]) {
+                Stk.push(i);
+            }
+        }
+
+        int maxi = 0;
+
+        for(int j=n-1;j>=0;j--){
+            while(!Stk.empty() && nums[j] >= nums[Stk.top()]){
+                maxi = max(maxi,j - Stk.top());
+                Stk.pop();
+            }
+        }
+
+        return maxi;
+    }
+};
