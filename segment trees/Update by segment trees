@@ -1,0 +1,18 @@
+void updatebySegmentTree(int l,int r,int i,int node){        
+        if(l == r){
+            isOccur[node] = 1;
+            return;
+        }
+
+        int mid = l + (r-l)/2;
+
+        if(i<=mid){
+            updatebySegmentTree(l,mid,i,2*node+1);
+        }
+        else{
+            updatebySegmentTree(mid+1,r,i,2*node+2);
+        }
+
+        isOccur[node] = isOccur[2*node+1] + isOccur[2*node+2];
+    }
+    
