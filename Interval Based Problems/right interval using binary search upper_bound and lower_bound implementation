@@ -1,0 +1,73 @@
+
+
+#define allSort(v) sort(begin(v),end(v))
+class Solution {
+public:
+
+    int solve(vector<vector<int>>& intervals,int target,int n,unordered_map<int,int>& mymap){
+        int low = 0,high = n - 1;
+        int ans = n + 1;
+        while(low <= high){
+            int mid = low + (high - low)/2;
+
+            if(intervals[mid][0] < target){
+                low = mid + 1;
+            }
+            else{
+                ans = mid;
+                high = mid - 1;
+            }
+        }
+        // cout<<ans<<endl;
+        if(ans == n+1){
+            return -1;
+        }
+        return mymap[intervals[ans][0]];
+    }
+
+    // void print(vector<vector<int>>& intervals){
+    //     for(auto t : intervals){
+    //         cout<<t[0]<<" "<<t[1]<<endl;
+    //     }
+    // }
+
+    vector<int> findRightInterval(vector<vector<int>>& intervals) {
+        unordered_map<int,int> mymap;
+        
+        int n = intervals.size();
+
+        for(int i=0;i<n;i++){
+            int start = intervals[i][0];
+            mymap[start] = i;
+        }
+
+        vector<vector<int>> temp = intervals;
+
+        allSort(temp);
+
+        // print(intervals);
+
+        vector<int> result;
+
+        // for(int i=0;i<n;i++){
+        //     int end = intervals[i][1];
+        //     auto it = mymap.lower_bound(end);
+        //     if(it != mymap.end()){
+        //         int start = it->first;
+        //         result.push_back(mymap[start]);
+        //     }
+        //     else{
+        //         result.push_back(-1);
+        //     }
+        // }
+
+        
+        for(int i=0;i<n;i++){
+            int end = intervals[i][1];
+            int data = solve(temp,end,n,mymap);
+            result.push_back(data);      
+        }
+
+        return result;
+    }
+};
