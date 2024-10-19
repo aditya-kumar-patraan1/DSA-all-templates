@@ -1,0 +1,13 @@
+int sumbySegementTree(int l,int r,int start,int end,int i){
+        if(l>end || r<start){
+            return 0;
+        }
+
+        int mid = l + (r-l)/2;
+
+        if(l>=start && r<=end){
+            return isOccur[i];
+        }
+
+        return sumbySegementTree(l,mid,start,end,2*i+1) + sumbySegementTree(mid+1,r,start,end,2*i+2);
+    } 
