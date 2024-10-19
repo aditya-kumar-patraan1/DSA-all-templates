@@ -1,0 +1,62 @@
+https://leetcode.com/problems/divide-intervals-into-minimum-number-of-groups/
+
+
+class Solution {
+public:
+    int minGroups(vector<vector<int>>& a) {
+        // int n = intervals.size();
+
+        // map<int,int> mymap;
+
+        // for(int i = 0;i < n;i++){
+        //     auto t = intervals[i];
+        //     int u = t[0];
+        //     int v = t[1];
+
+        //     mymap[u]++;
+        //     mymap[v + 1]--;
+        // }
+
+        // int maxi = 0;
+        // int sum = 0;
+
+        // for(auto [ele,freq]: mymap){
+        //     sum += freq;
+        //     maxi = max(maxi,sum);
+        // }
+
+        // return maxi;
+
+
+        auto comp = [&](auto& v1,auto& v2){
+            if(v1[0] == v2[0]){
+                return v1[1] < v2[1];
+            }
+            return v1[0] < v2[0];
+        };
+
+        sort(begin(a),end(a),comp);
+
+        priority_queue<int,vector<int>,greater<int>> pq;
+        int n = a.size();
+
+        for(int i=0;i<n;i++){
+            auto t = a[i];
+            int u = t[0];
+            int v = t[1];
+
+            if(!pq.empty() && u > pq.top()){
+                pq.pop();
+            }
+            pq.push(v);
+        }
+
+        // while(!pq.empty()){
+        //     cout<<pq.top()<<" ";pq.pop();
+        // }
+        // cout<<endl;
+
+        return pq.size();
+
+    }
+};
