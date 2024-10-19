@@ -1,0 +1,7 @@
+long long sum = (i * (i+1))/2;
+            
+            totalApples += (sum * 8);
+            
+            totalApples += (i* 4);
+
+            totalApples += ((i) * (i-1) * 8);
